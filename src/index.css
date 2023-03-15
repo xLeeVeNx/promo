@@ -1,0 +1,59 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Unbounded';
+  src: url('./assets/fonts/Unbounded/Unbounded-Medium.eot');
+  src: url('./assets/fonts/Unbounded/Unbounded-Medium.eot?#iefix') format('embedded-opentype'),
+  url('./assets/fonts/Unbounded/Unbounded-Medium.woff2') format('woff2'),
+  url('./assets/fonts/Unbounded/Unbounded-Medium.woff') format('woff'),
+  url('./assets/fonts/Unbounded/Unbounded-Medium.ttf') format('truetype'),
+  url('./assets/fonts/Unbounded/Unbounded-Medium.svg#Unbounded-Medium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Unbounded';
+  src: url('./assets/fonts/Unbounded/Unbounded-Regular.eot');
+  src: url('./assets/fonts/Unbounded/Unbounded-Regular.eot?#iefix') format('embedded-opentype'),
+  url('./assets/fonts/Unbounded/Unbounded-Regular.woff2') format('woff2'),
+  url('./assets/fonts/Unbounded/Unbounded-Regular.woff') format('woff'),
+  url('./assets/fonts/Unbounded/Unbounded-Regular.ttf') format('truetype'),
+  url('./assets/fonts/Unbounded/Unbounded-Regular.svg#Unbounded-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Unbounded', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.57;
+  color: #000000;
+  margin: 0;
+  background: #D2D6CE;
+}
+
+input, button, a {
+  font: inherit;
+  color: inherit;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  width: 86% !important;
+  height: auto !important;
+}

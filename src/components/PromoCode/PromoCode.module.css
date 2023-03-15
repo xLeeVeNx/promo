@@ -28,6 +28,7 @@
     border-radius: inherit;
     border: none;
     outline: none;
+    background: inherit;
 }
 
 .button {

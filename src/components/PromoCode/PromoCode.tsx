@@ -9,6 +9,12 @@ export const PromoCode = () => {
   const [inputValue, setInputValue] = useState('');
   const [isPromoCodeCorrect, setIsPromoCodeCorrect] = useState(false);
   const [radioValue, setRadioValue] = useState<RadioValueType>('en');
+  const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
+  const [priceText, setPriceText] = useState('Оплатить 210 $');
+  const smallDiscount = inputValue === 'sekta' || inputValue === 'mygap';
+  const bigDiscount = inputValue === 'iloveAI';
+  const ruPayment = radioValue === 'ru';
+
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -16,15 +22,34 @@ export const PromoCode = () => {
   const onApplyPromoCode = () => {
     if (promoCodes.includes(inputValue)) {
       setIsPromoCodeCorrect(true);
+      if (smallDiscount) {
+        setPaymentLink('https://platim.ru/pay/7L4GK4');
+        setPriceText(ruPayment ? 'Оплатить 12 000 ₽' : 'Оплатить 168 $');
+      }
+
+      if (bigDiscount) {
+        setPaymentLink('https://platim.ru/pay/7SH4vH');
+        setPriceText(ruPayment ? 'Оплатить 10 000 ₽' : 'Оплатить 140 $');
+      }
     }
   };
 
   const onPayButtonClick = () => {
-    window.open(`https://kakay-to_ssylka.com/${radioValue}`);
+    window.open(paymentLink);
   };
 
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setRadioValue(e.target.value as RadioValueType);
+    const value = e.target.value as RadioValueType;
+    const ru = value === 'ru';
+    setRadioValue(value);
+
+    if (smallDiscount) {
+      setPriceText(ru ? 'Оплатить 12 000 ₽' : 'Оплатить 168 $');
+    } else if (bigDiscount) {
+      setPriceText(ru ? 'Оплатить 10 000 ₽' : 'Оплатить 140 $');
+    } else {
+      setPriceText(ru ? 'Оплатить 15 000 ₽' : 'Оплатить 210 $');
+    }
   };
 
   return (
@@ -79,7 +104,7 @@ export const PromoCode = () => {
           </label>
         </div>
         <button className={style.paymentButton} onClick={onPayButtonClick}>
-          Оплатить 210 $
+          {priceText}
         </button>
       </div>
     </div>

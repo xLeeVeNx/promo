@@ -30,4 +30,4 @@ export const cards: CardSchema[] = [
   },
 ];
 
-export const promoCodes: string[] = ['test'];
+export const promoCodes: string[] = ['sekta', 'iloveAI', 'mygap'];

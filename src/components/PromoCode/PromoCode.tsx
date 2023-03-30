@@ -8,9 +8,9 @@ type RadioValueType = 'en' | 'ru';
 export const PromoCode = () => {
   const [inputValue, setInputValue] = useState('');
   const [isPromoCodeCorrect, setIsPromoCodeCorrect] = useState(false);
-  const [radioValue, setRadioValue] = useState<RadioValueType>('en');
+  const [radioValue, setRadioValue] = useState<RadioValueType>('ru');
   const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
-  const [priceText, setPriceText] = useState('Оплатить 210 $');
+  const [priceText, setPriceText] = useState('Оплатить 15 000 ₽');
   const smallDiscount =
     inputValue === 'sekta' ||
     inputValue === 'mygap' ||

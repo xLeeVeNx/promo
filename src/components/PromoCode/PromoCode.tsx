@@ -11,7 +11,11 @@ export const PromoCode = () => {
   const [radioValue, setRadioValue] = useState<RadioValueType>('en');
   const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
   const [priceText, setPriceText] = useState('Оплатить 210 $');
-  const smallDiscount = inputValue === 'sekta' || inputValue === 'mygap' || 'Insiders' || 'mesto';
+  const smallDiscount =
+    inputValue === 'sekta' ||
+    inputValue === 'mygap' ||
+    inputValue === 'Insiders' ||
+    inputValue === 'mesto';
   const bigDiscount = inputValue === 'iloveAI';
   const ruPayment = radioValue === 'ru';
 

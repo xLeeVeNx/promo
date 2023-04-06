@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import style from './PromoCode.module.css';
-import { promoCodes } from '@/constants';
 import classNames from 'classnames';
+import { bigPromoCodes, promoCodes, smallPromoCodes } from '@/constants';
 
 type RadioValueType = 'en' | 'ru';
 
@@ -11,12 +11,8 @@ export const PromoCode = () => {
   const [radioValue, setRadioValue] = useState<RadioValueType>('ru');
   const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
   const [priceText, setPriceText] = useState('Оплатить 15 000 ₽');
-  const smallDiscount =
-    inputValue === 'sekta' ||
-    inputValue === 'mygap' ||
-    inputValue === 'Insiders' ||
-    inputValue === 'mesto';
-  const bigDiscount = inputValue === 'iloveAI';
+  const smallDiscount = smallPromoCodes.includes(inputValue);
+  const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +43,12 @@ export const PromoCode = () => {
     const ru = value === 'ru';
     setRadioValue(value);
 
-    if (smallDiscount) {
-      setPriceText(ru ? 'Оплатить 12 000 ₽' : 'Оплатить 168 $');
-    } else if (bigDiscount) {
-      setPriceText(ru ? 'Оплатить 10 000 ₽' : 'Оплатить 140 $');
+    if (isPromoCodeCorrect) {
+      if (smallDiscount) {
+        setPriceText(ru ? 'Оплатить 12 000 ₽' : 'Оплатить 168 $');
+      } else if (bigDiscount) {
+        setPriceText(ru ? 'Оплатить 10 000 ₽' : 'Оплатить 140 $');
+      }
     } else {
       setPriceText(ru ? 'Оплатить 15 000 ₽' : 'Оплатить 210 $');
     }

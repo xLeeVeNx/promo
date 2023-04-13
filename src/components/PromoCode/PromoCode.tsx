@@ -13,6 +13,7 @@ export const PromoCode = () => {
   const [radioValue, setRadioValue] = useState<RadioValueType>('ru');
   const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
   const [priceText, setPriceText] = useState('Оплатить 15 000 ₽');
+  const [isLoading, setIsLoading] = useState(false);
   const smallDiscount = smallPromoCodes.includes(inputValue);
   const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
@@ -56,21 +57,25 @@ export const PromoCode = () => {
   };
 
   const onPayButtonClick = async () => {
-    if (radioValue === 'en') {
-      const amount = smallDiscount ? 168 : bigDiscount ? 140 : 210;
-      const order = await Api.createOrder({
-        currency: 'USD',
-        amount,
-        options: {
-          return_url: window.location.href,
-        },
-      });
-      if (order.id) {
-        const link = `${import.meta.env.VITE_PAYMENT_URL}/${order.id}`;
-        // window.location.href = link;
+    if (!isLoading) {
+      if (radioValue === 'en') {
+        setIsLoading(true);
+        const amount = smallDiscount ? 168 : bigDiscount ? 140 : 210;
+        const order = await Api.createOrder({
+          currency: 'USD',
+          amount,
+          options: {
+            return_url: window.location.href,
+          },
+        });
+        if (order.id) {
+          const link = `${import.meta.env.VITE_PAYMENT_URL}/${order.id}`;
+          setIsLoading(false);
+          window.location.href = link;
+        }
+      } else {
+        window.open(paymentLink);
       }
-    } else {
-      window.open(paymentLink);
     }
   };
 
@@ -142,7 +147,7 @@ export const PromoCode = () => {
           </label>
         </div>
         <button className={style.paymentButton} onClick={onPayButtonClick}>
-          {priceText}
+          {isLoading ? 'Загрузка...' : priceText}
         </button>
       </div>
     </div>

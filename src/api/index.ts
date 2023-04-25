@@ -11,11 +11,11 @@ const headers = {
 };
 
 export const baseURL = process.env.VITE_BASE_URL;
-if (!baseURL) {
-  console.error(
-    'You should create a .env file in the root directory if there is none and set the value to VITE_BASE_URL',
-  );
-}
+// if (!baseURL) {
+//   console.error(
+//     'You should create a .env file in the root directory if there is none and set the value to VITE_BASE_URL',
+//   );
+// }
 
 export const axiosInstance = axios.create({
   baseURL,

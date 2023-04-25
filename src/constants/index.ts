@@ -30,6 +30,6 @@ export const cards: CardSchema[] = [
   },
 ];
 
-export const smallPromoCodes: string[] = ['sekta', 'mygap', 'Insiders', 'mesto', 'sber500'];
-export const bigPromoCodes: string[] = ['iloveAI'];
+export const smallPromoCodes: string[] = JSON.parse(import.meta.env.VITE_SMALL_DISCOUNT);
+export const bigPromoCodes: string[] = JSON.parse(import.meta.env.VITE_BIG_DISCOUNT);
 export const promoCodes: string[] = [...smallPromoCodes, ...bigPromoCodes];

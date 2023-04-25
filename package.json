@@ -2,8 +2,11 @@
   "name": "vite-react-ts-eslint-prettier",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev:server": "ts-node ./backend/server.ts",
+    "dev:client": "vite ",
+    "dev": "vite --host=0.0.0.0",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "npx eslint src",
@@ -20,7 +23,7 @@
     "swiper": "^9.1.0"
   },
   "devDependencies": {
-    "@types/node": "^18.15.3",
+    "@types/node": "^18.15.11",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
@@ -35,7 +38,7 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "prettier": "^2.6.2",
     "typescript": "^4.6.3",
-    "vite": "^2.9.9",
+    "vite": "^4.2.2",
     "vite-tsconfig-paths": "^3.5.0"
   }
 }

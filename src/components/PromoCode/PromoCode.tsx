@@ -13,7 +13,7 @@ export const PromoCode = () => {
   const [radioValue, setRadioValue] = useState<RadioValueType>('ru');
   const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
   const [priceText, setPriceText] = useState('Оплатить 30 000 ₽');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, _] = useState(false);
   const smallDiscount = smallPromoCodes.includes(inputValue);
   const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
@@ -76,7 +76,7 @@ export const PromoCode = () => {
       //   }
       // } else {
       // }
-        window.open(paymentLink);
+      window.open(paymentLink);
     }
   };
 

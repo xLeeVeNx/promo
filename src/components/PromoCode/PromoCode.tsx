@@ -2,6 +2,8 @@ import React, { ChangeEvent, useState } from 'react';
 import style from './PromoCode.module.css';
 import classNames from 'classnames';
 import { bigPromoCodes, promoCodes, smallPromoCodes } from '@/constants';
+import { Api } from '@/api/api';
+import { removeOrderId } from '@/lib/removeOrderId/removeOrderId';
 
 type RadioValueType = 'en' | 'ru';
 
@@ -10,10 +12,30 @@ export const PromoCode = () => {
   const [isPromoCodeCorrect, setIsPromoCodeCorrect] = useState(false);
   const [radioValue, setRadioValue] = useState<RadioValueType>('ru');
   const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
-  const [priceText, setPriceText] = useState('Оплатить 15 000 ₽');
+  const [priceText, setPriceText] = useState('Оплатить 30 000 ₽');
+  const [isLoading, _] = useState(false);
   const smallDiscount = smallPromoCodes.includes(inputValue);
   const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
+
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('order_id');
+
+    if (orderId) {
+      localStorage.setItem('orderId', orderId);
+      window.location.href = removeOrderId(window.location.href);
+    } else {
+      const orderId = localStorage.getItem('orderId');
+      if (orderId) {
+        (async () => {
+          const order = await Api.checkOrderStatus(orderId);
+          alert(order.status);
+          localStorage.removeItem('orderId');
+        })();
+      }
+    }
+  }, []);
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -24,18 +46,38 @@ export const PromoCode = () => {
       setIsPromoCodeCorrect(true);
       if (smallDiscount) {
         setPaymentLink('https://platim.ru/pay/7L4GK4');
-        setPriceText(ruPayment ? 'Оплатить 12 000 ₽' : 'Оплатить 168 $');
+        setPriceText(ruPayment ? 'Оплатить 25 000 ₽' : 'Оплатить 310 $');
       }
 
       if (bigDiscount) {
         setPaymentLink('https://platim.ru/pay/7SH4vH');
-        setPriceText(ruPayment ? 'Оплатить 10 000 ₽' : 'Оплатить 140 $');
+        setPriceText(ruPayment ? 'Оплатить 20 000 ₽' : 'Оплатить 240 $');
       }
     }
   };
 
-  const onPayButtonClick = () => {
-    window.open(paymentLink);
+  const onPayButtonClick = async () => {
+    if (!isLoading) {
+      // if (radioValue === 'en') {
+      //   setIsLoading(true);
+      //   const amount = smallDiscount ? 168 : bigDiscount ? 140 : 210;
+      //   const newUrl = await Api.createOrder({
+      //     currency: 'USD',
+      //     amount,
+      //     options: {
+      //       force3d: '1',
+      //       auto_charge: '1',
+      //       return_url: window.location.href,
+      //     },
+      //   });
+      //   if (newUrl) {
+      //     setIsLoading(false);
+      //     window.location.href = newUrl;
+      //   }
+      // } else {
+      // }
+      window.open(paymentLink);
+    }
   };
 
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,12 +87,12 @@ export const PromoCode = () => {
 
     if (isPromoCodeCorrect) {
       if (smallDiscount) {
-        setPriceText(ru ? 'Оплатить 12 000 ₽' : 'Оплатить 168 $');
+        setPriceText(ru ? 'Оплатить 25 000 ₽' : 'Оплатить 310 $');
       } else if (bigDiscount) {
-        setPriceText(ru ? 'Оплатить 10 000 ₽' : 'Оплатить 140 $');
+        setPriceText(ru ? 'Оплатить 20 000 ₽' : 'Оплатить 240 $');
       }
     } else {
-      setPriceText(ru ? 'Оплатить 15 000 ₽' : 'Оплатить 210 $');
+      setPriceText(ru ? 'Оплатить 30 000 ₽' : 'Оплатить 370 $');
     }
   };
 
@@ -106,7 +148,7 @@ export const PromoCode = () => {
           </label>
         </div>
         <button className={style.paymentButton} onClick={onPayButtonClick}>
-          {priceText}
+          {isLoading ? 'Загрузка...' : priceText}
         </button>
       </div>
     </div>

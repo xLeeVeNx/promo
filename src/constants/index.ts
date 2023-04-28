@@ -30,6 +30,6 @@ export const cards: CardSchema[] = [
   },
 ];
 
-export const smallPromoCodes: string[] = JSON.parse(import.meta.env.VITE_SMALL_DISCOUNT);
-export const bigPromoCodes: string[] = JSON.parse(import.meta.env.VITE_BIG_DISCOUNT);
+export const smallPromoCodes: string[] = import.meta.env.VITE_SMALL_DISCOUNT.split(',');
+export const bigPromoCodes: string[] = import.meta.env.VITE_BIG_DISCOUNT.split(',');
 export const promoCodes: string[] = [...smallPromoCodes, ...bigPromoCodes];

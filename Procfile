@@ -1,1 +1,0 @@
-web: python api/proxy_server.py & npm run start --prefix frontend

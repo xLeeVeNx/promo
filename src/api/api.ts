@@ -3,7 +3,7 @@ import { axiosInstance } from './index';
 export class Api {
   static async createOrder(body: any): Promise<any> {
     try {
-      const response = await axiosInstance('/orders/create', body);
+      const response = await axiosInstance.post('/orders/create', body);
       const order_id = response.data.orders[0].id;
       const new_url = `${import.meta.env.VITE_PAYMENT_URL}/${order_id}`;
       return new_url;

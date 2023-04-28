@@ -11,9 +11,9 @@ export const PromoCode = () => {
   const [inputValue, setInputValue] = useState('');
   const [isPromoCodeCorrect, setIsPromoCodeCorrect] = useState(false);
   const [radioValue, setRadioValue] = useState<RadioValueType>('ru');
-  const [paymentLink, setPaymentLink] = useState(import.meta.env.VITE_RU_PAYMENT_LINK);
+  const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
   const [priceText, setPriceText] = useState('Оплатить 30 000 ₽');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, _] = useState(false);
   const smallDiscount = smallPromoCodes.includes(inputValue);
   const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
@@ -45,12 +45,12 @@ export const PromoCode = () => {
     if (promoCodes.includes(inputValue)) {
       setIsPromoCodeCorrect(true);
       if (smallDiscount) {
-        setPaymentLink(import.meta.env.VITE_RU_PAYMENT_LINK_WITH_SMALL_DISCOUNT);
+        setPaymentLink('https://platim.ru/pay/7L4GK4');
         setPriceText(ruPayment ? 'Оплатить 25 000 ₽' : 'Оплатить 310 $');
       }
 
       if (bigDiscount) {
-        setPaymentLink(import.meta.env.VITE_RU_PAYMENT_LINK_WITH_BIG_DISCOUNT);
+        setPaymentLink('https://platim.ru/pay/7SH4vH');
         setPriceText(ruPayment ? 'Оплатить 20 000 ₽' : 'Оплатить 240 $');
       }
     }
@@ -58,25 +58,24 @@ export const PromoCode = () => {
 
   const onPayButtonClick = async () => {
     if (!isLoading) {
-      if (radioValue === 'en') {
-        setIsLoading(true);
-        const amount = smallDiscount ? 310 : bigDiscount ? 240 : 370;
-        const newUrl = await Api.createOrder({
-          currency: 'USD',
-          amount,
-          options: {
-            force3d: '1',
-            auto_charge: '1',
-            return_url: window.location.href,
-          },
-        });
-        if (newUrl) {
-          setIsLoading(false);
-          window.location.href = newUrl;
-        }
-      } else {
-        window.open(paymentLink);
-      }
+      //   if (radioValue === 'en') {
+      //     // setIsLoading(true);
+      //     // const amount = smallDiscount ? 310 : bigDiscount ? 240 : 370;
+      //     // const newUrl = await Api.createOrder({
+      //     //   currency: 'USD',
+      //     //   amount,
+      //     //   options: {
+      //     //     return_url: window.location.href,
+      //     //   },
+      //     // });
+      //     // if (newUrl) {
+      //     //   setIsLoading(false);
+      //     //   window.location.href = newUrl;
+      //     // }
+      //   // } else {
+      //   // }
+      // }
+      window.open(paymentLink);
     }
   };
 

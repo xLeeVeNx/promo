@@ -13,7 +13,7 @@ export const PromoCode = () => {
   const [radioValue, setRadioValue] = useState<RadioValueType>('ru');
   const [paymentLink, setPaymentLink] = useState('https://platim.ru/pay/4bDS2j');
   const [priceText, setPriceText] = useState('Оплатить 30 000 ₽');
-  const [isLoading, _] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const smallDiscount = smallPromoCodes.includes(inputValue);
   const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
@@ -58,24 +58,23 @@ export const PromoCode = () => {
 
   const onPayButtonClick = async () => {
     if (!isLoading) {
-      //   if (radioValue === 'en') {
-      //     // setIsLoading(true);
-      //     // const amount = smallDiscount ? 310 : bigDiscount ? 240 : 370;
-      //     // const newUrl = await Api.createOrder({
-      //     //   currency: 'USD',
-      //     //   amount,
-      //     //   options: {
-      //     //     return_url: window.location.href,
-      //     //   },
-      //     // });
-      //     // if (newUrl) {
-      //     //   setIsLoading(false);
-      //     //   window.location.href = newUrl;
-      //     // }
-      //   // } else {
-      //   // }
-      // }
-      window.open(paymentLink);
+      if (radioValue === 'en') {
+        setIsLoading(true);
+        const amount = smallDiscount ? 310 : bigDiscount ? 240 : 370;
+        const newUrl = await Api.createOrder({
+          currency: 'USD',
+          amount,
+          options: {
+            return_url: window.location.href
+          }
+        });
+        if (newUrl) {
+          setIsLoading(false);
+          window.location.href = newUrl;
+        }
+      } else {
+        window.open(paymentLink);
+      }
     }
   };
 

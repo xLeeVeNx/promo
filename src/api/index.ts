@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const token = btoa(`${import.meta.env.VITE_USERNAME}:${import.meta.env.VITE_PASSWORD}`);
+const token = btoa('maslovai:Z2xoq8DT8FYHWg2C');
 
 const headers = {
   'Content-Type': 'application/json',
@@ -9,7 +9,7 @@ const headers = {
   },
 };
 
-export const baseURL = import.meta.env.VITE_BASE_URL;
+export const baseURL = 'https://89pnjapffh.execute-api.eu-west-1.amazonaws.com';
 
 export const axiosInstance = axios.create({
   baseURL,

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import style from './PromoCode.module.css';
 import classNames from 'classnames';
-import { bigPromoCodes, promoCodes, smallPromoCodes } from '@/constants';
+import { bigPromoCodes, leshaPromoCodes, promoCodes, smallPromoCodes } from '@/constants';
 import { Api } from '@/api/api';
 import { removeOrderId } from '@/lib/removeOrderId/removeOrderId';
 
@@ -15,6 +15,7 @@ export const PromoCode = () => {
   const [priceText, setPriceText] = useState('Оплатить 30 000 ₽');
   const [isLoading, setIsLoading] = useState(false);
   const smallDiscount = smallPromoCodes.includes(inputValue);
+  const leshaDiscount = leshaPromoCodes.includes(inputValue);
   const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
 
@@ -53,6 +54,10 @@ export const PromoCode = () => {
         setPriceText(ruPayment ? 'Оплатить 25 000 ₽' : 'Оплатить 310 $');
       }
 
+      if (leshaDiscount) {
+        setPriceText(!ruPayment ? 'Оплатить 50 $' : 'Оплатить 30 000 ₽');
+      }
+
       if (bigDiscount) {
         setPaymentLink('https://platim.ru/pay/7SH4vH');
         setPriceText(ruPayment ? 'Оплатить 20 000 ₽' : 'Оплатить 240 $');
@@ -64,12 +69,13 @@ export const PromoCode = () => {
     if (!isLoading) {
       if (radioValue === 'en') {
         setIsLoading(true);
-        const amount = smallDiscount ? 310 : bigDiscount ? 240 : 370;
+        const amount = smallDiscount ? 310 : bigDiscount ? 240 : leshaDiscount ? 50 : 370;
         const newUrl = await Api.createOrder({
           currency: 'USD',
           amount,
           options: {
             return_url: window.location.href,
+            terminal: 'terminal_maslovai_usd',
           },
         });
         if (newUrl) {
@@ -92,6 +98,8 @@ export const PromoCode = () => {
         setPriceText(ru ? 'Оплатить 25 000 ₽' : 'Оплатить 310 $');
       } else if (bigDiscount) {
         setPriceText(ru ? 'Оплатить 20 000 ₽' : 'Оплатить 240 $');
+      } else if (leshaDiscount) {
+        setPriceText(ru ? 'Оплатить 30 000 ₽' : 'Оплатить 50 $');
       }
     } else {
       setPriceText(ru ? 'Оплатить 30 000 ₽' : 'Оплатить 370 $');

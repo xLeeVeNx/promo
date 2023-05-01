@@ -21,4 +21,23 @@ export class Api {
       return {};
     }
   }
+
+  static async getOrders(): Promise<any> {
+    const token = btoa('maslovai:Z2xoq8DT8FYHWg2C');
+
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${token}`,
+    };
+    try {
+      return await axiosInstance
+        .get(`/orders`, {
+          headers,
+        })
+        .then((res) => res.data.orders);
+    } catch (e) {
+      console.log(e);
+      return {};
+    }
+  }
 }

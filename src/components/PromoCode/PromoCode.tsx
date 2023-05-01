@@ -30,7 +30,11 @@ export const PromoCode = () => {
       if (orderId) {
         (async () => {
           const order = await Api.checkOrderStatus(orderId);
-          alert(order.status);
+          if (order.status === 'success') {
+            window.open('https://forms.gle/rQcb4cqAjAiTheAB8');
+          } else if (order.status === 'error') {
+            alert(order.failure_message || order.status);
+          }
           localStorage.removeItem('orderId');
         })();
       }
@@ -65,8 +69,8 @@ export const PromoCode = () => {
           currency: 'USD',
           amount,
           options: {
-            return_url: window.location.href
-          }
+            return_url: window.location.href,
+          },
         });
         if (newUrl) {
           setIsLoading(false);

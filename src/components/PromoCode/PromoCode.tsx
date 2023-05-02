@@ -75,7 +75,7 @@ export const PromoCode = () => {
           amount,
           options: {
             return_url: window.location.href,
-            terminal: 'terminal_maslovai',
+            terminal: 'terminal_maslovai_usd',
             force3d: 1,
           },
         });

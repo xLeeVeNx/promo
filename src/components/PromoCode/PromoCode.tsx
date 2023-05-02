@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import style from './PromoCode.module.css';
 import classNames from 'classnames';
-import { bigPromoCodes, promoCodes, smallPromoCodes } from '@/constants';
+import { bigPromoCodes, leshaPromoCodes, promoCodes, smallPromoCodes } from '@/constants';
 import { Api } from '@/api/api';
 import { removeOrderId } from '@/lib/removeOrderId/removeOrderId';
 
@@ -15,6 +15,7 @@ export const PromoCode = () => {
   const [priceText, setPriceText] = useState('Оплатить 30 000 ₽');
   const [isLoading, setIsLoading] = useState(false);
   const smallDiscount = smallPromoCodes.includes(inputValue);
+  const leshaDiscount = leshaPromoCodes.includes(inputValue);
   const bigDiscount = bigPromoCodes.includes(inputValue);
   const ruPayment = radioValue === 'ru';
 
@@ -65,7 +66,7 @@ export const PromoCode = () => {
     if (!isLoading) {
       if (radioValue === 'en') {
         setIsLoading(true);
-        const amount = smallDiscount ? 310 : bigDiscount ? 240 : 370;
+        const amount = smallDiscount ? 310 : bigDiscount ? 240 : leshaDiscount ? 50 : 370;
         const newUrl = await Api.createOrder({
           currency: 'USD',
           amount,

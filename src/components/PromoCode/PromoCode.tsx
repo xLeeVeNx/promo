@@ -31,10 +31,9 @@ export const PromoCode = () => {
       if (orderId) {
         (async () => {
           const order = await Api.checkOrderStatus(orderId);
-          console.log(order);
           if (order.operations[0].status === 'success') {
             window.open('https://forms.gle/rQcb4cqAjAiTheAB8');
-          } else if (order.status === 'error') {
+          } else {
             alert(order.failure_message || order.status);
           }
           localStorage.removeItem('orderId');
